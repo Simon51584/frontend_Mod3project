@@ -21,3 +21,13 @@
   border: solid 2px black;
   background-color: blue;
 }
+
+body {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  width: 960px;
+  margin: 0 auto;
+}

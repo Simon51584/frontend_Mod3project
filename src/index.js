@@ -45,9 +45,9 @@ const removeTetramino = () => {
 
 const gameListeners = () => {
   document.addEventListener("keydown", (event) => {
+    console.log(event);
     if (event.code === "Space") {
       removeTetramino();
-      console.log(currentRotation);
       if (currentRotation === 3) {
         currentRotation = 0;
         drawTetramino();

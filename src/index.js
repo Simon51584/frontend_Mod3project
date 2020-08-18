@@ -65,7 +65,7 @@ const allTetraminos = [
 
 let currentPosition = 5;
 let currentRotation = 0;
-const currentTetramino = () => allTetraminos[6][currentRotation];
+const currentTetramino = () => allTetraminos[0][currentRotation];
 
 const main = () => {
   renderGrid();
@@ -97,15 +97,39 @@ const removeTetramino = () => {
 const gameListeners = () => {
   document.addEventListener("keydown", (event) => {
     console.log(event);
-    if (event.key === "Shift") {
-      removeTetramino();
-      if (currentRotation === 3) {
-        currentRotation = 0;
+    switch (event.code) {
+      case "ShiftRight":
+        removeTetramino();
+        if (currentRotation === 3) {
+          currentRotation = 0;
+          drawTetramino();
+        } else {
+          currentRotation += 1;
+          drawTetramino();
+        }
+        break;
+      case "ShiftLeft":
+        removeTetramino();
+        if (currentRotation === 0) {
+          currentRotation = 3;
+          drawTetramino();
+        } else {
+          currentRotation -= 1;
+          drawTetramino();
+        }
+        break;
+      case "ArrowLeft":
+        removeTetramino();
+        currentPosition -= 1;
         drawTetramino();
-      } else {
-        currentRotation += 1;
+        break;
+      case "ArrowRight":
+        removeTetramino();
+        currentPosition += 1;
         drawTetramino();
-      }
+        break;
+
+      default:
     }
   });
 };

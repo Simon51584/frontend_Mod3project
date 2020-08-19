@@ -3,7 +3,7 @@ let squares;
 const ScoreDisplay = document.querySelector("#score");
 const StartBtn = document.querySelector("#start-button");
 
-let currentPosition = 185;
+let currentPosition = 195;
 let currentRotation = 0;
 let currentTetramino =
   allTetraminos[Math.floor(Math.random() * allTetraminos.length)];
@@ -54,13 +54,20 @@ const freeze = () => {
     currentTetramino[currentRotation].forEach((index) => {
       squares[currentPosition + index].classList.add("taken");
     });
-    currentPosition = 165;
+    currentPosition = 195;
     let random = Math.floor(Math.random() * allTetraminos.length);
     currentRotation = 0;
     currentTetramino = allTetraminos[random];
     draw();
   }
 };
+
+let timerId = setInterval(() => {
+  erase();
+  currentPosition -= 10;
+  draw();
+  freeze();
+}, 1000);
 
 const gameListeners = () => {
   document.addEventListener("keydown", (event) => {

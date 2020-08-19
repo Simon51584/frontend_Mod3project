@@ -43,14 +43,14 @@ const hitRightWall = () => {
   return upperBound === 9;
 };
 
+const hitPiece = (direction) => {
+  return currentTetramino[currentRotation].some((index) =>
+    squares[index + currentPosition - direction].classList.contains("taken")
+  );
+};
+
 const freeze = () => {
-  if (
-    currentTetramino[currentRotation].some((index) =>
-      squares[index + currentPosition - columnsPerRow].classList.contains(
-        "taken"
-      )
-    )
-  ) {
+  if (hitPiece(10)) {
     currentTetramino[currentRotation].forEach((index) => {
       squares[currentPosition + index].classList.add("taken");
     });
@@ -91,6 +91,7 @@ const gameListeners = () => {
         erase();
         currentPosition -= 1;
         draw();
+        freeze();
         break;
       case "ArrowRight":
         erase();
@@ -98,6 +99,7 @@ const gameListeners = () => {
           ? (currentPosition = currentPosition)
           : (currentPosition += 1);
         draw();
+        freeze();
         break;
       case "ArrowUp":
         erase();

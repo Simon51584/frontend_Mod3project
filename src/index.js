@@ -3,7 +3,7 @@ let squares;
 const ScoreDisplay = document.querySelector("#score");
 const StartBtn = document.querySelector("#start-button");
 
-let currentPosition = 165;
+let currentPosition = 185;
 let currentRotation = 0;
 let currentTetramino =
   allTetraminos[Math.floor(Math.random() * allTetraminos.length)];
@@ -15,7 +15,7 @@ const main = () => {
 
 const renderGameBoard = () => {
   let boxes = "";
-  for (let i = 0; i < 210; i++) {
+  for (let i = 0; i < 220; i++) {
     boxes += `<div ${i < 10 ? "class='taken top'" : ""}></div>`;
   }
   grid.innerHTML = boxes;

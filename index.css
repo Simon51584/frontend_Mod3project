@@ -24,6 +24,10 @@
   background-color: blue;
 }
 
+div.top{
+  display: none;
+}
+
 /* body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

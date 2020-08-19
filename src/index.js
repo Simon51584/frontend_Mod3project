@@ -2,6 +2,7 @@ const grid = document.querySelector("#div-grid");
 let squares;
 const ScoreDisplay = document.querySelector("#score");
 const StartBtn = document.querySelector("#start-button");
+let score = 0;
 
 let currentPosition = 195;
 let currentRotation = 0;
@@ -15,7 +16,7 @@ const main = () => {
 
 const renderGameBoard = () => {
   let boxes = "";
-  for (let i = 0; i < 220; i++) {
+  for (let i = 0; i < 240; i++) {
     boxes += `<div ${i < 10 ? "class='taken top'" : ""}></div>`;
   }
   grid.innerHTML = boxes;
@@ -49,6 +50,31 @@ const hitPiece = (direction) => {
   );
 };
 
+const clearRows = () => {
+  for (let i = 10; i < 239; i += 10) {
+    const row = [
+      i,
+      i + 1,
+      i + 2,
+      i + 3,
+      i + 4,
+      i + 5,
+      i + 6,
+      i + 7,
+      i + 8,
+      i + 9,
+    ];
+    if (row.every((index) => squares[index].classList.contains("taken"))) {
+      score += 10;
+      ScoreDisplay.textContent = score;
+      row.forEach((index) => squares[index].classList.remove("taken", "tetramino"));
+      let wipedRow = squares.splice(i, 10);
+      squares = squares.concat(wipedRow);
+      squares.forEach((cell) => grid.appendChild(cell));
+    }
+  }
+};
+
 const freeze = () => {
   if (hitPiece(10)) {
     currentTetramino[currentRotation].forEach((index) => {
@@ -59,6 +85,7 @@ const freeze = () => {
     currentRotation = 0;
     currentTetramino = allTetraminos[random];
     draw();
+    clearRows();
   }
 };
 

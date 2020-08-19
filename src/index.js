@@ -51,7 +51,6 @@ const freeze = () => {
       )
     )
   ) {
-    console.log("hit");
     currentTetramino[currentRotation].forEach((index) => {
       squares[currentPosition + index].classList.add("taken");
     });

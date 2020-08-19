@@ -25,9 +25,12 @@ const moveUp = () => {
 const startButton = () => {
   StartBtn.addEventListener("click", (event) => {
     if (timerId) {
+      erase();
+      StartBtn.textContent = "Start";
       clearInterval(timerId);
       timerId = null;
     } else {
+      StartBtn.textContent = "Pause";
       draw();
       timerId = setInterval(moveUp, 1000);
     }

@@ -15,7 +15,7 @@ const main = () => {
 
 const renderGameBoard = () => {
   let boxes = "";
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 210; i++) {
     boxes += `<div ${i < 10 ? "class='taken top'" : ""}></div>`;
   }
   grid.innerHTML = boxes;

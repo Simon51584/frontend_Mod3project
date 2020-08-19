@@ -5,45 +5,62 @@ const StartBtn = document.querySelector("#start-button");
 
 let currentPosition = 165;
 let currentRotation = 0;
-const currentTetramino = () => allTetraminos[6][currentRotation];
+let currentTetramino =
+  allTetraminos[Math.floor(Math.random() * allTetraminos.length)];
 
 const main = () => {
   renderGameBoard();
-  drawTetramino();
+  draw();
 };
 
 const renderGameBoard = () => {
   let boxes = "";
   for (let i = 0; i < 200; i++) {
-    boxes += "<div></div>";
+    boxes += `<div ${i < 10 ? "class='taken top'" : ""}></div>`;
   }
   grid.innerHTML = boxes;
   squares = Array.from(document.querySelectorAll(".grid div"));
   gameListeners();
 };
 
-const drawTetramino = () => {
-  currentTetramino().forEach((index) => {
+const draw = () => {
+  currentTetramino[currentRotation].forEach((index) => {
     squares[currentPosition + index].classList.add("tetramino");
   });
 };
 
-const eraseTetramino = () => {
-  currentTetramino().forEach((index) => {
+const erase = () => {
+  currentTetramino[currentRotation].forEach((index) => {
     squares[currentPosition + index].classList.remove("tetramino");
   });
 };
 
 const hitRightWall = () => {
-  const tetPositions = currentTetramino().map((index) =>
+  const tetPositions = currentTetramino[currentRotation].map((index) =>
     parseInt((index + currentPosition).toString().slice(-1))
   );
   const upperBound = Math.max(...tetPositions);
   return upperBound === 9;
 };
 
-const hitCeiling = () => {
-  return currentPosition < 10;
+const freeze = () => {
+  if (
+    currentTetramino[currentRotation].some((index) =>
+      squares[index + currentPosition - columnsPerRow].classList.contains(
+        "taken"
+      )
+    )
+  ) {
+    console.log("hit");
+    currentTetramino[currentRotation].forEach((index) => {
+      squares[currentPosition + index].classList.add("taken");
+    });
+    currentPosition = 165;
+    let random = Math.floor(Math.random() * allTetraminos.length);
+    currentRotation = 0;
+    currentTetramino = allTetraminos[random];
+    draw();
+  }
 };
 
 const gameListeners = () => {
@@ -51,48 +68,43 @@ const gameListeners = () => {
     switch (event.code) {
       case "ShiftRight":
         if (currentRotation === 3) {
-          eraseTetramino();
+          erase();
           currentRotation = 0;
-          drawTetramino();
+          draw();
         } else {
-          eraseTetramino();
+          erase();
           currentRotation += 1;
-          drawTetramino();
+          draw();
         }
         break;
       case "ShiftLeft":
         if (currentRotation === 0) {
-          eraseTetramino();
+          erase();
           currentRotation = 3;
-          drawTetramino();
+          draw();
         } else {
-          eraseTetramino();
+          erase();
           currentRotation -= 1;
-          drawTetramino();
+          draw();
         }
         break;
       case "ArrowLeft":
-        eraseTetramino();
+        erase();
         currentPosition -= 1;
-        drawTetramino();
+        draw();
         break;
       case "ArrowRight":
-        eraseTetramino();
+        erase();
         hitRightWall()
           ? (currentPosition = currentPosition)
           : (currentPosition += 1);
-        drawTetramino();
+        draw();
         break;
       case "ArrowUp":
-        eraseTetramino();
-        if (hitCeiling()) {
-          drawTetramino();
-          currentPosition = 165;
-          drawTetramino();
-        } else {
-          currentPosition -= 10;
-          drawTetramino();
-        }
+        erase();
+        currentPosition -= 10;
+        draw();
+        freeze();
         break;
       default:
     }

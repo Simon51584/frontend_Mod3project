@@ -3,7 +3,7 @@ let squares;
 const ScoreDisplay = document.querySelector("#score");
 const StartBtn = document.querySelector("#start-button");
 
-let currentPosition = 165;
+let currentPosition = 195;
 let currentRotation = 0;
 let currentTetramino =
   allTetraminos[Math.floor(Math.random() * allTetraminos.length)];
@@ -15,7 +15,7 @@ const main = () => {
 
 const renderGameBoard = () => {
   let boxes = "";
-  for (let i = 0; i < 210; i++) {
+  for (let i = 0; i < 220; i++) {
     boxes += `<div ${i < 10 ? "class='taken top'" : ""}></div>`;
   }
   grid.innerHTML = boxes;
@@ -43,24 +43,31 @@ const hitRightWall = () => {
   return upperBound === 9;
 };
 
+const hitPiece = (direction) => {
+  return currentTetramino[currentRotation].some((index) =>
+    squares[index + currentPosition - direction].classList.contains("taken")
+  );
+};
+
 const freeze = () => {
-  if (
-    currentTetramino[currentRotation].some((index) =>
-      squares[index + currentPosition - columnsPerRow].classList.contains(
-        "taken"
-      )
-    )
-  ) {
+  if (hitPiece(10)) {
     currentTetramino[currentRotation].forEach((index) => {
       squares[currentPosition + index].classList.add("taken");
     });
-    currentPosition = 165;
+    currentPosition = 195;
     let random = Math.floor(Math.random() * allTetraminos.length);
     currentRotation = 0;
     currentTetramino = allTetraminos[random];
     draw();
   }
 };
+
+let timerId = setInterval(() => {
+  erase();
+  currentPosition -= 10;
+  draw();
+  freeze();
+}, 1000);
 
 const gameListeners = () => {
   document.addEventListener("keydown", (event) => {
@@ -89,15 +96,19 @@ const gameListeners = () => {
         break;
       case "ArrowLeft":
         erase();
-        currentPosition -= 1;
+        if (!hitPiece(1)) {
+          currentPosition -= 1;
+        }
         draw();
+        freeze();
         break;
       case "ArrowRight":
         erase();
-        hitRightWall()
+        hitRightWall() || hitPiece(-1)
           ? (currentPosition = currentPosition)
           : (currentPosition += 1);
         draw();
+        freeze();
         break;
       case "ArrowUp":
         erase();

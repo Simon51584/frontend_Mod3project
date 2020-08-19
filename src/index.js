@@ -34,12 +34,16 @@ const eraseTetramino = () => {
   });
 };
 
-const hitUpperBound = () => {
-  const tetPosition = currentTetramino().map((index) =>
+const hitRightWall = () => {
+  const tetPositions = currentTetramino().map((index) =>
     parseInt((index + currentPosition).toString().slice(-1))
   );
-  const upperBound = Math.max(...tetPosition);
+  const upperBound = Math.max(...tetPositions);
   return upperBound === 9;
+};
+
+const hitCeiling = () => {
+  return currentPosition < 10;
 };
 
 const gameListeners = () => {
@@ -74,15 +78,21 @@ const gameListeners = () => {
         break;
       case "ArrowRight":
         eraseTetramino();
-        hitUpperBound()
+        hitRightWall()
           ? (currentPosition = currentPosition)
           : (currentPosition += 1);
         drawTetramino();
         break;
       case "ArrowUp":
         eraseTetramino();
-        currentPosition -= 10;
-        drawTetramino();
+        if (hitCeiling()) {
+          drawTetramino();
+          currentPosition = 165;
+          drawTetramino();
+        } else {
+          currentPosition -= 10;
+          drawTetramino();
+        }
         break;
       default:
     }

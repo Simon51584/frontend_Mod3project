@@ -89,13 +89,15 @@ const gameListeners = () => {
         break;
       case "ArrowLeft":
         erase();
-        currentPosition -= 1;
+        if (!hitPiece(1)) {
+          currentPosition -= 1;
+        }
         draw();
         freeze();
         break;
       case "ArrowRight":
         erase();
-        hitRightWall()
+        hitRightWall() || hitPiece(-1)
           ? (currentPosition = currentPosition)
           : (currentPosition += 1);
         draw();

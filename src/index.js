@@ -3,6 +3,7 @@ let squares;
 const ScoreDisplay = document.querySelector("#score");
 const StartBtn = document.querySelector("#start-button");
 let score = 0;
+let timerId;
 
 let currentPosition = 195;
 let currentRotation = 0;
@@ -11,7 +12,26 @@ let currentTetramino =
 
 const main = () => {
   renderGameBoard();
+  startButton();
+};
+
+const moveUp = () => {
+  erase();
+  currentPosition -= 10;
   draw();
+  freeze();
+};
+
+const startButton = () => {
+  StartBtn.addEventListener("click", (event) => {
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
+    } else {
+      draw();
+      timerId = setInterval(moveUp, 1000);
+    }
+  });
 };
 
 const renderGameBoard = () => {
@@ -67,7 +87,9 @@ const clearRows = () => {
     if (row.every((index) => squares[index].classList.contains("taken"))) {
       score += 10;
       ScoreDisplay.textContent = score;
-      row.forEach((index) => squares[index].classList.remove("taken", "tetramino"));
+      row.forEach((index) =>
+        squares[index].classList.remove("taken", "tetramino")
+      );
       let wipedRow = squares.splice(i, 10);
       squares = squares.concat(wipedRow);
       squares.forEach((cell) => grid.appendChild(cell));
@@ -88,13 +110,6 @@ const freeze = () => {
     clearRows();
   }
 };
-
-let timerId = setInterval(() => {
-  erase();
-  currentPosition -= 10;
-  draw();
-  freeze();
-}, 1000);
 
 const gameListeners = () => {
   document.addEventListener("keydown", (event) => {

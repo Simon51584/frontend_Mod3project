@@ -4,6 +4,16 @@
   display: none;
 }
 
+form#signIn {
+  position: fixed;
+  right: 20px;
+  margin-top: 12px;
+}
+
+form#signIn button{
+  margin-left: 5px;
+}
+
 .grid {
   width: fit-content;
   height: fit-content;

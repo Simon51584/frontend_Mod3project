@@ -10,8 +10,12 @@ form#signIn {
   margin-top: 12px;
 }
 
+form#signIn p { 
+  margin-top: 12px;
+}
+
 form#signIn button{
-  margin-left: 5px;
+  margin-left: 10px;
 }
 
 .grid {

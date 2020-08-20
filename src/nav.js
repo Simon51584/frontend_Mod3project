@@ -1,6 +1,7 @@
 const dashboard = document.querySelector("#dashboard");
 const dashboardBtn = document.querySelector("#dashboard-btn");
 const signInForm = document.querySelector("#signIn");
+const userInput = document.querySelector("#userInput");
 
 dashboardBtn.addEventListener("click", (event) => {
   if (dashboard.dataset.show === "true") {
@@ -38,8 +39,17 @@ scoreboardBtn.addEventListener("click", (event) => {
   }
 });
 
-signInForm.addEventListener("submit", (event) => {
+signInForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const name = signInForm.children[0].children[1].value;
-  createPlayer(name);
+  if (Object.keys(user).length === 0) {
+    const name = signInForm.children[0].children[1].value;
+    await createPlayer(name);
+    userInput.innerHTML = `<p>Welcome, ${user.name}</p>`;
+    signInForm.childNodes[3].textContent = "Log out";
+  } else {
+    user = {};
+    userInput.innerHTML = `<label for="nameInput" class="sr-only">Name:</label>
+    <input type="text" class="form-control-plaintext" id="nameInput" placeholder="Enter Name" >`;
+    signInForm.childNodes[3].textContent = "Sign In";
+  }
 });

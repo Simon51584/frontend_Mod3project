@@ -4,6 +4,7 @@ const ScoreDisplay = document.querySelector("#score");
 const StartBtn = document.querySelector("#start-button");
 let score = 0;
 let timerId;
+let activeGame = false;
 
 let currentPosition = 195;
 let currentRotation = 0;
@@ -29,10 +30,12 @@ const startButton = () => {
       StartBtn.textContent = "Start";
       clearInterval(timerId);
       timerId = null;
+      activeGame = false;
     } else {
       StartBtn.textContent = "Pause";
       draw();
       timerId = setInterval(moveUp, 1000);
+      activeGame = true;
     }
   });
 };
@@ -44,7 +47,7 @@ const renderGameBoard = () => {
   }
   grid.innerHTML = boxes;
   squares = Array.from(document.querySelectorAll(".grid div"));
-  gameListeners();
+  addGameListeners();
 };
 
 const draw = () => {
@@ -111,11 +114,36 @@ const freeze = () => {
     currentTetramino = allTetraminos[random];
     draw();
     clearRows();
+    gameOver();
   }
 };
 
-const gameListeners = () => {
-  document.addEventListener("keydown", (event) => {
+const gameOver = () => {
+  // let row = [180, 181, 182, 183, 184, 185, 186, 187, 188, 189];
+  if (
+    // row.some((index) => {
+    //   squares[index].classList.contains("taken");
+    // })
+    squares[185].classList.contains("taken")
+  ) {
+    activeGame = false;
+    erase();
+    ScoreDisplay.textContent = "Game Over";
+    clearInterval(timerId);
+    removeGameListeners();
+  }
+};
+
+const addGameListeners = () => {
+  document.addEventListener("keydown", (event) => gameListeners(event));
+};
+
+const removeGameListeners = () => {
+  document.removeEventListener("keydown", (event) => gameListeners(event));
+};
+
+const gameListeners = (event) => {
+  if (activeGame) {
     switch (event.code) {
       case "ShiftRight":
         if (currentRotation === 3) {
@@ -163,7 +191,7 @@ const gameListeners = () => {
         break;
       default:
     }
-  });
+  }
 };
 
 main();

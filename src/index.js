@@ -4,6 +4,7 @@ const ScoreDisplay = document.querySelector("#score");
 const StartBtn = document.querySelector("#start-button");
 let score = 0;
 let timerId;
+let activeGame = false;
 
 let currentPosition = 195;
 let currentRotation = 0;
@@ -24,15 +25,22 @@ const moveUp = () => {
 
 const startButton = () => {
   StartBtn.addEventListener("click", (event) => {
-    if (timerId) {
+    if (StartBtn.textContent === "New Game") {
+      resetGameBoard();
+      createNewGame();
+    }
+
+    if (timerId && gameId) {
       erase();
-      StartBtn.textContent = "Start";
+      StartBtn.textContent = "Resume";
       clearInterval(timerId);
       timerId = null;
+      activeGame = false;
     } else {
       StartBtn.textContent = "Pause";
       draw();
       timerId = setInterval(moveUp, 1000);
+      activeGame = true;
     }
   });
 };
@@ -44,7 +52,12 @@ const renderGameBoard = () => {
   }
   grid.innerHTML = boxes;
   squares = Array.from(document.querySelectorAll(".grid div"));
-  gameListeners();
+  addGameListeners();
+};
+
+const resetGameBoard = () => {
+  grid.innerHTML = "";
+  renderGameBoard();
 };
 
 const draw = () => {
@@ -111,11 +124,34 @@ const freeze = () => {
     currentTetramino = allTetraminos[random];
     draw();
     clearRows();
+    gameOver();
   }
 };
 
-const gameListeners = () => {
-  document.addEventListener("keydown", (event) => {
+const gameOver = () => {
+  if (squares[185].classList.contains("taken")) {
+    activeGame = false;
+    erase();
+    ScoreDisplay.textContent = "Game Over";
+    clearInterval(timerId);
+    removeGameListeners();
+    StartBtn.textContent = "New Game";
+    finalizeScore({ gameId, score });
+    gameId = null;
+    score = 0;
+  }
+};
+
+const addGameListeners = () => {
+  document.addEventListener("keydown", (event) => gameListeners(event));
+};
+
+const removeGameListeners = () => {
+  document.removeEventListener("keydown", (event) => gameListeners(event));
+};
+
+const gameListeners = (event) => {
+  if (activeGame) {
     switch (event.code) {
       case "ShiftRight":
         if (currentRotation === 3) {
@@ -163,7 +199,7 @@ const gameListeners = () => {
         break;
       default:
     }
-  });
+  }
 };
 
 main();

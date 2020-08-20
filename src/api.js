@@ -1,9 +1,38 @@
+let gameId;
+
 const getAllScores = async () => {
   const res = await fetch("http://localhost:3000/games");
   const data = await res.json();
   console.log(data);
 };
 
+const createNewGame = async () => {
+  const reqObj = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ player_id: 1, score: 0 }),
+  };
+  const res = await fetch("http://localhost:3000/games", reqObj);
+  const data = await res.json();
+  gameId = data.id;
+};
+
+const finalizeScore = async ({ gameId, score }) => {
+  const reqObj = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ score }),
+  };
+
+  const res = await fetch(`http://localhost:3000/games/${gameId}`, reqObj);
+  const data = await res.json();
+  console.log(data);
+  console.log("Great success");
+};
 // fetch('http://localhost:3000/players', {
 //     method: 'POST',
 //     headers: {

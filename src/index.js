@@ -25,9 +25,13 @@ const moveUp = () => {
 
 const startButton = () => {
   StartBtn.addEventListener("click", (event) => {
+    if (StartBtn.textContent === "New Game") {
+      gameId = createNewGame();
+    }
+
     if (timerId) {
       erase();
-      StartBtn.textContent = "Start";
+      StartBtn.textContent = "Resume";
       clearInterval(timerId);
       timerId = null;
       activeGame = false;
@@ -49,6 +53,8 @@ const renderGameBoard = () => {
   squares = Array.from(document.querySelectorAll(".grid div"));
   addGameListeners();
 };
+
+
 
 const draw = () => {
   currentTetramino[currentRotation].forEach((index) => {
@@ -119,18 +125,18 @@ const freeze = () => {
 };
 
 const gameOver = () => {
-  // let row = [180, 181, 182, 183, 184, 185, 186, 187, 188, 189];
-  if (
-    // row.some((index) => {
-    //   squares[index].classList.contains("taken");
-    // })
-    squares[185].classList.contains("taken")
-  ) {
+  if (squares[185].classList.contains("taken")) {
     activeGame = false;
     erase();
     ScoreDisplay.textContent = "Game Over";
     clearInterval(timerId);
     removeGameListeners();
+    StartBtn.textContent = "New Game";
+    finalizeScore({ gameId, score });
+    gameId = null;
+    score = 0;
+    grid.innerHTML = "";
+    renderGameBoard();
   }
 };
 

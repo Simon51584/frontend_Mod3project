@@ -14,16 +14,16 @@ dashboardBtn.addEventListener("click", event => {
 })
 
 
-const start = document.querySelector("#start")
-const startBtn = document.querySelector("#start-btn")
+const st = document.querySelector("#st")
+const stBtn = document.querySelector("#st-btn")
 
-startBtn.addEventListener("click", event => {
-  if(start.dataset.show==="true"){
-      start.classList.add("hidden")
-      start.dataset.show="false"
+stBtn.addEventListener("click", event => {
+  if(st.dataset.show==="true"){
+      st.classList.add("hidden")
+      st.dataset.show="false"
     } else {
-        start.classList.remove("hidden")
-        start.dataset.show="true"
+        st.classList.remove("hidden")
+        st.dataset.show="true"
 
     }
 

@@ -43,13 +43,39 @@ form#signIn button{
   height: 16px;
   width: 16px;
   border: solid 2px black;
-  background-color: blue;
 }
 
 div.top{
   display: none;
 }
 
+.red {
+  background-color: red;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.green {
+  background-color: green;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.indigo {
+  background-color: indigo;
+}
+
+.violet {
+  background-color: violet;
+}
 /* body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

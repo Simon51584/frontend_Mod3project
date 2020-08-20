@@ -5,11 +5,12 @@ const StartBtn = document.querySelector("#start-button");
 let score = 0;
 let timerId;
 let activeGame = false;
-
 let currentPosition = 195;
 let currentRotation = 0;
-let currentTetramino =
-  allTetraminos[Math.floor(Math.random() * allTetraminos.length)];
+const firstRandom = Math.floor(Math.random() * allTetraminos.length);
+let currentTetramino = allTetraminos[firstRandom];
+const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
+let currentColorClass = colors[firstRandom];
 
 const main = () => {
   renderGameBoard();
@@ -39,6 +40,7 @@ const startButton = () => {
     if (StartBtn.textContent === "New Game") {
       resetGameBoard();
       createNewGame();
+      ScoreDisplay.textContent = score
     }
 
     if (timerId && gameId) {
@@ -72,13 +74,16 @@ const resetGameBoard = () => {
 
 const draw = () => {
   currentTetramino[currentRotation].forEach((index) => {
-    squares[currentPosition + index].classList.add("tetramino");
+    squares[currentPosition + index].classList.add(
+      "tetramino",
+      currentColorClass
+    );
   });
 };
 
 const erase = () => {
   currentTetramino[currentRotation].forEach((index) => {
-    squares[currentPosition + index].classList.remove("tetramino");
+    squares[currentPosition + index].classList = [];
   });
 };
 
@@ -113,9 +118,9 @@ const clearRows = () => {
     if (row.every((index) => squares[index].classList.contains("taken"))) {
       score += 10;
       ScoreDisplay.textContent = score;
-      row.forEach((index) =>
-        squares[index].classList.remove("taken", "tetramino")
-      );
+      row.forEach((index) => {
+        squares[index].classList = [];
+      });
       let wipedRow = squares.splice(i, 10);
       squares = squares.concat(wipedRow);
       squares.forEach((cell) => grid.appendChild(cell));
@@ -132,6 +137,7 @@ const freeze = () => {
     let random = Math.floor(Math.random() * allTetraminos.length);
     currentRotation = 0;
     currentTetramino = allTetraminos[random];
+    currentColorClass = colors[random];
     draw();
     clearRows();
     gameOver();

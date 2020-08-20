@@ -16,7 +16,7 @@ const createNewGame = async () => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ player_id: 1, score: 0 }),
+    body: JSON.stringify({ player_id: user.id, score: 0 }),
   };
   const res = await fetch("http://localhost:3000/games", reqObj);
   const data = await res.json();
@@ -50,7 +50,7 @@ const createPlayer = async (name) => {
   const res = await fetch("http://localhost:3000/players", reqObj);
   const data = await res.json();
   user.name = data.name;
-  user.id = data.id
+  user.id = data.id;
 };
 // fetch('http://localhost:3000/players', {
 //     method: 'POST',

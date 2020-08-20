@@ -54,7 +54,7 @@
                 </button>
 
                 <form class="form-inline" id="signIn">
-                  <div class="form-group mb-2">
+                  <div class="form-group mb-2" id="userInput">
                     <label for="nameInput" class="sr-only">Name:</label>
                     <input type="text" class="form-control-plaintext" id="nameInput" placeholder="Enter Name" >
                   </div>
@@ -89,12 +89,14 @@
               </hr>
               <p >We've brought you this brand new take on a cult classic!!!</p>
               <p>From the creative talent Sam Montalvo && Seth Starr!!!</p>
+              <p>Please enter your name above before you start your game!</p>
             </div>
             
             <div class="container-fluid">
               <div class="hidden" id="st" datashow="false">
                 <div>
                   <h3>Score: <span id="score">0</span></h3> 
+                  <span id="gameOver"><h4>Game Over</h4></span>
                   <button id="start-button">New Game</button>
                   <!-- do not touch -->
                   <div id="div-grid" class="grid"></div>

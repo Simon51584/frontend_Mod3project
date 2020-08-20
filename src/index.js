@@ -2,6 +2,7 @@ const grid = document.querySelector("#div-grid");
 let squares;
 const ScoreDisplay = document.querySelector("#score");
 const StartBtn = document.querySelector("#start-button");
+const gameOverSpan = document.querySelector("#gameOver");
 let score = 0;
 let timerId;
 let activeGame = false;
@@ -80,6 +81,7 @@ const renderGameBoard = () => {
 
 const resetGameBoard = () => {
   grid.innerHTML = "";
+  gameOverSpan.style.display = "none";
   renderGameBoard();
 };
 
@@ -159,7 +161,8 @@ const gameOver = () => {
   if (squares[185].classList.contains("taken")) {
     activeGame = false;
     erase();
-    ScoreDisplay.textContent = "Game Over";
+    ScoreDisplay.textContent = score;
+    gameOverSpan.style.display = "block";
     clearInterval(timerId);
     removeGameListeners();
     StartBtn.textContent = "New Game";

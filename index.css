@@ -18,8 +18,9 @@ form#signIn button{
   margin-left: 10px;
 }
 
-#error{
+#gameOver{
   color: red;
+  display: none;
 }
 
 .grid {

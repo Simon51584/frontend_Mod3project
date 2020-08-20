@@ -17,12 +17,14 @@ const st = document.querySelector("#st");
 const stBtn = document.querySelector("#st-btn");
 
 stBtn.addEventListener("click", (event) => {
-  if (st.dataset.show === "true") {
-    st.classList.add("hidden");
-    st.dataset.show = "false";
-  } else {
-    st.classList.remove("hidden");
-    st.dataset.show = "true";
+  if (Object.keys(user).length !== 0) {
+    if (st.dataset.show === "true") {
+      st.classList.add("hidden");
+      st.dataset.show = "false";
+    } else {
+      st.classList.remove("hidden");
+      st.dataset.show = "true";
+    }
   }
 });
 
@@ -51,5 +53,6 @@ signInForm.addEventListener("submit", async (event) => {
     userInput.innerHTML = `<label for="nameInput" class="sr-only">Name:</label>
     <input type="text" class="form-control-plaintext" id="nameInput" placeholder="Enter Name" >`;
     signInForm.childNodes[3].textContent = "Sign In";
+    st.classList.add("hidden");
   }
 });

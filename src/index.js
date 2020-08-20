@@ -24,6 +24,16 @@ const moveUp = () => {
   freeze();
 };
 
+// const playerLoggedIn = () => {
+//   let errorSpan = document.querySelector("#error");
+//   if (user === {}) {
+//     errorSpan.textContent = "Please Sign In to play";
+//     return;
+//   } else {
+//     errorSpan.textContent = "";
+//   }
+// };
+
 const startButton = () => {
   StartBtn.addEventListener("click", (event) => {
     if (StartBtn.textContent === "New Game") {
@@ -53,7 +63,6 @@ const renderGameBoard = () => {
   }
   grid.innerHTML = boxes;
   squares = Array.from(document.querySelectorAll(".grid div"));
-  
 };
 
 const resetGameBoard = () => {
@@ -164,19 +173,19 @@ const gameListeners = (event) => {
           currentRotation += 1;
           draw();
         }
-        
+
         break;
-        case "ShiftLeft":
-          if (currentRotation === 0) {
-            erase();
-            currentRotation = 3;
-            draw();
-          } else {
-            erase();
-            currentRotation -= 1;
-            draw();
-          }
-          
+      case "ShiftLeft":
+        if (currentRotation === 0) {
+          erase();
+          currentRotation = 3;
+          draw();
+        } else {
+          erase();
+          currentRotation -= 1;
+          draw();
+        }
+
         break;
       case "ArrowLeft":
         erase();

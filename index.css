@@ -18,6 +18,10 @@ form#signIn button{
   margin-left: 10px;
 }
 
+#error{
+  color: red;
+}
+
 .grid {
   width: fit-content;
   height: fit-content;

@@ -14,6 +14,7 @@ let currentTetramino =
 const main = () => {
   renderGameBoard();
   startButton();
+  addGameListeners();
 };
 
 const moveUp = () => {
@@ -52,7 +53,7 @@ const renderGameBoard = () => {
   }
   grid.innerHTML = boxes;
   squares = Array.from(document.querySelectorAll(".grid div"));
-  addGameListeners();
+  
 };
 
 const resetGameBoard = () => {
@@ -163,17 +164,19 @@ const gameListeners = (event) => {
           currentRotation += 1;
           draw();
         }
+        
         break;
-      case "ShiftLeft":
-        if (currentRotation === 0) {
-          erase();
-          currentRotation = 3;
-          draw();
-        } else {
-          erase();
-          currentRotation -= 1;
-          draw();
-        }
+        case "ShiftLeft":
+          if (currentRotation === 0) {
+            erase();
+            currentRotation = 3;
+            draw();
+          } else {
+            erase();
+            currentRotation -= 1;
+            draw();
+          }
+          
         break;
       case "ArrowLeft":
         erase();

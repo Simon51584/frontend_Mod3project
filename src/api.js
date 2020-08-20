@@ -1,11 +1,14 @@
 let gameId;
 let user = {};
+let allGameScores = []
 
 const getAllScores = async () => {
   const res = await fetch("http://localhost:3000/games");
   const data = await res.json();
-  console.log(data);
+  allGameScores = [...data];
 };
+
+getAllScores()
 
 const createNewGame = async () => {
   const reqObj = {
@@ -48,7 +51,6 @@ const createPlayer = async (name) => {
   const data = await res.json();
   user.name = data.name;
   user.id = data.id
-  console.log(user);
 };
 // fetch('http://localhost:3000/players', {
 //     method: 'POST',

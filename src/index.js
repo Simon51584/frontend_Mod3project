@@ -26,10 +26,11 @@ const moveUp = () => {
 const startButton = () => {
   StartBtn.addEventListener("click", (event) => {
     if (StartBtn.textContent === "New Game") {
-      gameId = createNewGame();
+      resetGameBoard();
+      createNewGame();
     }
 
-    if (timerId) {
+    if (timerId && gameId) {
       erase();
       StartBtn.textContent = "Resume";
       clearInterval(timerId);
@@ -54,7 +55,10 @@ const renderGameBoard = () => {
   addGameListeners();
 };
 
-
+const resetGameBoard = () => {
+  grid.innerHTML = "";
+  renderGameBoard();
+};
 
 const draw = () => {
   currentTetramino[currentRotation].forEach((index) => {
@@ -135,8 +139,6 @@ const gameOver = () => {
     finalizeScore({ gameId, score });
     gameId = null;
     score = 0;
-    grid.innerHTML = "";
-    renderGameBoard();
   }
 };
 

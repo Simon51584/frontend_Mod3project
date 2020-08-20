@@ -12,6 +12,17 @@ let currentTetramino = allTetraminos[firstRandom];
 const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
 let currentColorClass = colors[firstRandom];
 
+window.addEventListener(
+  "keydown",
+  function (e) {
+    // arrow keys
+    if ([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+      e.preventDefault();
+    }
+  },
+  false
+);
+
 const main = () => {
   renderGameBoard();
   startButton();
@@ -40,7 +51,7 @@ const startButton = () => {
     if (StartBtn.textContent === "New Game") {
       resetGameBoard();
       createNewGame();
-      ScoreDisplay.textContent = score
+      ScoreDisplay.textContent = score;
     }
 
     if (timerId && gameId) {

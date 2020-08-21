@@ -24,7 +24,7 @@ stBtn.addEventListener("click", (event) => {
     } else {
       st.classList.remove("hidden");
       st.dataset.show = "true";
-   
+    }
   }
 });
 

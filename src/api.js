@@ -6,6 +6,10 @@ const getAllScores = async () => {
   const res = await fetch("http://localhost:3000/games");
   const data = await res.json();
   allGameScores = [...data];
+  allGameScores.forEach(data=>{
+    const highScoreDiv = document.getElementById("all-scores")
+      highScoreDiv.innerHTML += (`<li>${data.score}</li>`)
+      console.log(data.score)})
 };
 
 getAllScores()

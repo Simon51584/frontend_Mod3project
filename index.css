@@ -4,6 +4,25 @@
   display: none;
 }
 
+form#signIn {
+  position: fixed;
+  right: 20px;
+  margin-top: 12px;
+}
+
+form#signIn p { 
+  margin-top: 12px;
+}
+
+form#signIn button{
+  margin-left: 10px;
+}
+
+#gameOver{
+  color: red;
+  display: none;
+}
+
 .grid {
   width: fit-content;
   height: fit-content;
@@ -14,6 +33,7 @@
   grid-row-gap: 0px;
   border: solid 5px black;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .grid div {
@@ -25,13 +45,39 @@
   height: 16px;
   width: 16px;
   border: solid 2px black;
-  background-color: blue;
 }
 
 div.top{
   display: none;
 }
 
+.red {
+  background-color: red;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.green {
+  background-color: green;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.indigo {
+  background-color: indigo;
+}
+
+.violet {
+  background-color: violet;
+}
 /* body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

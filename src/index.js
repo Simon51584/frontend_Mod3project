@@ -2,14 +2,27 @@ const grid = document.querySelector("#div-grid");
 let squares;
 const ScoreDisplay = document.querySelector("#score");
 const StartBtn = document.querySelector("#start-button");
+const gameOverSpan = document.querySelector("#gameOver");
 let score = 0;
 let timerId;
 let activeGame = false;
-
 let currentPosition = 195;
 let currentRotation = 0;
-let currentTetramino =
-  allTetraminos[Math.floor(Math.random() * allTetraminos.length)];
+const firstRandom = Math.floor(Math.random() * allTetraminos.length);
+let currentTetramino = allTetraminos[firstRandom];
+const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
+let currentColorClass = colors[firstRandom];
+
+window.addEventListener(
+  "keydown",
+  function (e) {
+    // arrow keys
+    if ([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+      e.preventDefault();
+    }
+  },
+  false
+);
 
 const main = () => {
   renderGameBoard();
@@ -24,11 +37,22 @@ const moveUp = () => {
   freeze();
 };
 
+// const playerLoggedIn = () => {
+//   let errorSpan = document.querySelector("#error");
+//   if (user === {}) {
+//     errorSpan.textContent = "Please Sign In to play";
+//     return;
+//   } else {
+//     errorSpan.textContent = "";
+//   }
+// };
+
 const startButton = () => {
   StartBtn.addEventListener("click", (event) => {
     if (StartBtn.textContent === "New Game") {
       resetGameBoard();
       createNewGame();
+      ScoreDisplay.textContent = score;
     }
 
     if (timerId && gameId) {
@@ -53,23 +77,26 @@ const renderGameBoard = () => {
   }
   grid.innerHTML = boxes;
   squares = Array.from(document.querySelectorAll(".grid div"));
-  
 };
 
 const resetGameBoard = () => {
   grid.innerHTML = "";
+  gameOverSpan.style.display = "none";
   renderGameBoard();
 };
 
 const draw = () => {
   currentTetramino[currentRotation].forEach((index) => {
-    squares[currentPosition + index].classList.add("tetramino");
+    squares[currentPosition + index].classList.add(
+      "tetramino",
+      currentColorClass
+    );
   });
 };
 
 const erase = () => {
   currentTetramino[currentRotation].forEach((index) => {
-    squares[currentPosition + index].classList.remove("tetramino");
+    squares[currentPosition + index].classList = [];
   });
 };
 
@@ -104,9 +131,9 @@ const clearRows = () => {
     if (row.every((index) => squares[index].classList.contains("taken"))) {
       score += 10;
       ScoreDisplay.textContent = score;
-      row.forEach((index) =>
-        squares[index].classList.remove("taken", "tetramino")
-      );
+      row.forEach((index) => {
+        squares[index].classList = [];
+      });
       let wipedRow = squares.splice(i, 10);
       squares = squares.concat(wipedRow);
       squares.forEach((cell) => grid.appendChild(cell));
@@ -123,6 +150,7 @@ const freeze = () => {
     let random = Math.floor(Math.random() * allTetraminos.length);
     currentRotation = 0;
     currentTetramino = allTetraminos[random];
+    currentColorClass = colors[random];
     draw();
     clearRows();
     gameOver();
@@ -133,7 +161,8 @@ const gameOver = () => {
   if (squares[185].classList.contains("taken")) {
     activeGame = false;
     erase();
-    ScoreDisplay.textContent = "Game Over";
+    ScoreDisplay.textContent = score;
+    gameOverSpan.style.display = "block";
     clearInterval(timerId);
     removeGameListeners();
     StartBtn.textContent = "New Game";
@@ -164,19 +193,19 @@ const gameListeners = (event) => {
           currentRotation += 1;
           draw();
         }
-        
+
         break;
-        case "ShiftLeft":
-          if (currentRotation === 0) {
-            erase();
-            currentRotation = 3;
-            draw();
-          } else {
-            erase();
-            currentRotation -= 1;
-            draw();
-          }
-          
+      case "ShiftLeft":
+        if (currentRotation === 0) {
+          erase();
+          currentRotation = 3;
+          draw();
+        } else {
+          erase();
+          currentRotation -= 1;
+          draw();
+        }
+
         break;
       case "ArrowLeft":
         erase();

@@ -43,3 +43,4 @@ scoreboardBtn.addEventListener("click", event => {
     }
 
 })
+

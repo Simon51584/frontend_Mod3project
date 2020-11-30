@@ -10,5 +10,6 @@ To Run this Game:
 Clone this repository
 Make sure that the backend API is running in your terminal using Rails S
 Ruby version 6.0.3
+Run "open index.html" to run the game and enjoy.
 
 Check out the deployed project: https://tetrisnew3.herokuapp.com/

@@ -13,3 +13,4 @@ Ruby version 6.0.3
 Run "open index.html" to run the game and enjoy.
 
 Check out the deployed project: https://tetrisnew3.herokuapp.com/
+Check out this Demo video: https://www.loom.com/share/a1af9b55f4c14c2694749bacd865e081
